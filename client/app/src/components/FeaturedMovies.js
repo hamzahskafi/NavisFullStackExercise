@@ -8,7 +8,7 @@ import MovieCard from '@app/components/MovieCard';
 
 // modules
 import { FETCH_FEATURED_MOVIES } from '@app/modules/actions';
-import { selectFeaturedMovies } from '@app/modules/selectors';
+import { selectMovies } from '@app/modules/selectors';
 
 // util
 import buildAction from '@app/util/buildAction';
@@ -27,7 +27,7 @@ const FeaturedMovies = props => {
     dispatch(buildAction(FETCH_FEATURED_MOVIES));
   }, []);
 
-  const movies = useSelector(selectFeaturedMovies);
+  const movies = useSelector(selectMovies);
 
   return (
     <div className={classes.root}>

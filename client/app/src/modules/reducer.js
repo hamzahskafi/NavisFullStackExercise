@@ -3,12 +3,17 @@ import * as Actions from './actions';
 
 const initialState = {
   featuredMovies: [],
+  searchMoviesRequestPayload: {}
 };
 
 const reducer = handleActions(
   {
-    [Actions.SET_FEATURED_MOVIES]: (state, action) => {
+    [Actions.SET_MOVIES]: (state, action) => {
       state.featuredMovies = action?.payload;
+      return state;
+    },
+    [Actions.SET_SEARCH_MOVIES_REQ_PAYLOAD]: (state, action) => {
+      state.searchMoviesRequestPayload = action?.payload;
       return state;
     },
   },

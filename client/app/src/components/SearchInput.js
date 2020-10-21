@@ -1,5 +1,6 @@
 // libs
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // components
 import {
@@ -10,7 +11,7 @@ import {
   MenuItem,
 } from '@material-ui/core';
 import { GET_MOVIE_RESULTS } from '@app/modules/actions';
-import { selectMovieResults } from '@app/modules/selectors';
+import { selectMovies } from '@app/modules/selectors';
 
 const styles = theme => ({
   root: {
@@ -31,26 +32,35 @@ const styles = theme => ({
   },
 });
 
-const handleSearch = props => {
+const SearchInput = props => {
   const { classes } = props;
+  const [title, setTitle] = useState()
+  const [actor, setActor] = useState()
+  const [genre, setGenre] = useState()
+  const [genereList, setGenreList] = useState([]);
+
   const dispatch = useDispatch();
-
-  useEffect(() => {
-  dispatch(buildAction(GET_MOVIE_RESULTS));
-  }, []);
-
-  const movies = useSelector(selectMovieResults);
+  
+  const searchMovies = () => {
+    dispatch(buildAction(GET_MOVIE_RESULTS));
+  }
 
   return (
     <div className={classes.root}>
       <TextField
         placeholder='Title'
         className={classes.input}
+        onChange={(e)=>{
+          setTitle(e.target.value);
+        }}
       />
 
       <TextField
         placeholder='Actor'
         className={classes.input}
+        onChange={(e)=>{
+          setActor(e.target.value);
+        }}
       />
 
       <Select className={classes.input}>
@@ -59,7 +69,7 @@ const handleSearch = props => {
         </MenuItem>
       </Select>
 
-      <Button onSubmit={handleSearch} className={classes.searchButton}>
+      <Button onClick={searchMovies} className={classes.searchButton}>
         Search
       </Button>
     </div>

@@ -5,7 +5,7 @@ import axios from 'axios';
 
 function* fetchFeaturedMovies(action) {
   const response = yield axios.get('/api/movie/featured');
-  yield put(buildAction(Actions.SET_FEATURED_MOVIES, response.data));
+  yield put(buildAction(Actions.SET_MOVIES, response.data));
 }
 
 function* getMovieResults(action) {
@@ -16,11 +16,12 @@ function* getMovieResults(action) {
         genre_id: genreIdFromSelector
     }
 });
-  yield put(buildAction(Actions.GET_MOVIE_RESULTS, response.data));
+  yield put(buildAction(Actions.SET_MOVIES, response.data));
 }
 
 export default function* watchAll() {
   yield all([
     takeLatest(Actions.FETCH_FEATURED_MOVIES, fetchFeaturedMovies),
+    takeLatest(Actions.GET_MOVIE_RESULTS, getMovieResults),
   ]);
 }
