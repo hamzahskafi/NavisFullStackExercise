@@ -14,7 +14,6 @@ function* fetchGenreList(action) {
 }
 
 function* fetchMovieResults(action) {
-  console.log("action: ", action);
   const response = yield axios.get("/api/movie/search", {
     params: action.payload,
   });
@@ -22,7 +21,6 @@ function* fetchMovieResults(action) {
 }
 
 function* fetchMovieDetails(action) {
-  console.log("action: ", action);
   const response = yield axios.get("/api/movie/details", {
     params: action.payload,
   });
