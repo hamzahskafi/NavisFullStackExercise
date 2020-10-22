@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { withStyles, Typography } from "@material-ui/core";
-import { useDispatch } from "react-redux";
-import buildAction from "@app/util/buildAction";
+import CloseIcon from '@material-ui/icons/Close';
+import { IconButton } from '@material-ui/core';
 
 function getModalStyle() {
   const top = 50;
@@ -25,6 +25,13 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  customizedButton: {
+    position: 'absolute',
+    left: '89%',
+    top: '1%',
+    backgroundColor: 'lightgray',
+    color: 'gray',
+  },
 }));
 
 const MovieDetailsModal = ({ selectedMovie, closeModal, isModalVisible }) => {
@@ -32,14 +39,15 @@ const MovieDetailsModal = ({ selectedMovie, closeModal, isModalVisible }) => {
   const [modalStyle] = useState(getModalStyle);
   const body = (
     <div style={modalStyle} className={classes.paper}>
+      <IconButton className={classes.customizedButton} onClick={() => closeModal()}>
+      <CloseIcon />
+    </IconButton>
       <img
         src={`/images/${selectedMovie.poster}`}
         alt={`${selectedMovie.title} Poster`}
       />
       <Typography>{selectedMovie.title}</Typography>
-      <Typography>
-      {selectedMovie.studio}
-      </Typography>
+      <Typography>{selectedMovie.studio}</Typography>
       <Typography>
         {selectedMovie.year} ({selectedMovie.rating})
       </Typography>
