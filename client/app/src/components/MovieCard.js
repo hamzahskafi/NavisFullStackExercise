@@ -1,24 +1,24 @@
 // libs
-import React from 'react';
+import React from "react";
 
 // components
-import { withStyles, Typography } from '@material-ui/core';
+import { withStyles, Typography } from "@material-ui/core";
 
 // modules
-import { SET_SELECTED_MOVIE_ID } from '@app/modules/actions';
+import { SET_SELECTED_MOVIE_ID } from "@app/modules/actions";
 
 // util
-import buildAction from '@app/util/buildAction';
+import buildAction from "@app/util/buildAction";
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    padding: '0 20px 50px',
-    '& .MuiTypography-root': {
+    padding: "0 20px 50px",
+    "& .MuiTypography-root": {
       color: theme.palette.app.white,
     },
   },
   clickable: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
   poster: {
     // TODO
@@ -28,7 +28,7 @@ const styles = theme => ({
   },
 });
 
-const MovieCard = props => {
+const MovieCard = (props) => {
   const { data, large = false, classes } = props;
 
   const width = large ? 267 : 200;
@@ -43,9 +43,7 @@ const MovieCard = props => {
           className={classes.poster}
           style={{ width, height }}
         />
-        <Typography className={classes.title}>
-          {data.title}
-        </Typography>
+        <Typography className={classes.title}>{data.title}</Typography>
         <Typography>
           {data.year} ({data.rating})
         </Typography>

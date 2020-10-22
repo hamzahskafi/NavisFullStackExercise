@@ -2,6 +2,7 @@ package com.navis.movies.controllers;
 
 import com.navis.movies.dao.MoviesDAO;
 import com.navis.movies.dto.MovieResultDTO;
+import com.navis.movies.dto.MovieDetailsDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,32 +23,44 @@ public class MovieController {
 
     @Operation(description = "Get featured Movies")
     @GetMapping("/featured")
-    public List<MovieResultDTO> getFeaturedMovies()  {
+    public List<MovieResultDTO> getFeaturedMovies() {
         return moviesDAO.getFeaturedMovies();
     }
-    
+
     @Operation(description = "Search Movies")
     @GetMapping("/search")
     public List<MovieResultDTO> getMovies(
-        @QueryParam("title") String title,
-        @QueryParam("actor") String actor,
-        @QueryParam("genre") String genre_id
-    )  {
-        if(title != null && !title.isEmpty()){
-            if(actor!=null && !actor.isEmpty()){
-                if(genre_id != null && !genre_id.isEmpty())
+            @QueryParam("title") String title,
+            @QueryParam("actor") String actor,
+            @QueryParam("genre") String genre_id
+    ) {
+        if (title != null && !title.isEmpty()) {
+            if (actor != null && !actor.isEmpty()) {
+                if (genre_id != null && !genre_id.isEmpty()) {
                     return moviesDAO.getMoviesByTitleActorGenre(title, actor, genre_id);
-                else return moviesDAO.getMoviesByTitleActor(title, actor);
+                } else {
+                    return moviesDAO.getMoviesByTitleActor(title, actor);
+                }
             }
-            if(genre_id != null && !genre_id.isEmpty())
+            if (genre_id != null && !genre_id.isEmpty()) {
                 return moviesDAO.getMoviesByTitleGenre(title, genre_id);
-            else return moviesDAO.getMoviesByTitle(title);
+            } else {
+                return moviesDAO.getMoviesByTitle(title);
+            }
         }
-        if(actor != null && !actor.isEmpty()){
-            if(genre_id != null && !genre_id.isEmpty())
+        if (actor != null && !actor.isEmpty()) {
+            if (genre_id != null && !genre_id.isEmpty()) {
                 return moviesDAO.getMoviesByActorGenre(actor, genre_id);
-        return moviesDAO.getMoviesByActor(actor);
+            }
+            return moviesDAO.getMoviesByActor(actor);
         }
         return moviesDAO.getMoviesByGenre(genre_id);
+    }
+
+    @Operation(description = "Search Movies")
+    @GetMapping("/details")
+    public MovieDetailsDTO getMovieDetails(@QueryParam("id") String movie_id) {
+
+        return moviesDAO.getMovieDetails(movie_id);
     }
 }

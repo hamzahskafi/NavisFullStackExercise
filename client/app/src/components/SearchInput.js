@@ -11,9 +11,9 @@ import {
   Button,
   MenuItem,
 } from "@material-ui/core";
-import { GET_MOVIE_RESULTS } from "@app/modules/actions";
+import { FETCH_MOVIE_RESULTS } from "@app/modules/actions";
 import { selectGenreList } from "@app/modules/selectors";
-import { GET_GENRE_LIST } from "../modules/actions";
+import { FETCH_GENRE_LIST } from "../modules/actions";
 
 const styles = (theme) => ({
   root: {
@@ -44,19 +44,18 @@ const SearchInput = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(buildAction(GET_GENRE_LIST));
+    dispatch(buildAction(FETCH_GENRE_LIST));
   }, []);
 
   useEffect(() => {
     setGenreList(genreListSelector);
   }, [genreListSelector]);
 
-  const missingParams = !title && !actor && !genre_id 
+  const missingParams = !title && !actor && !genre_id;
 
   const searchMovies = () => {
-    console.log("GET_MOVIE_RESULTS");
     dispatch(
-      buildAction(GET_MOVIE_RESULTS, {
+      buildAction(FETCH_MOVIE_RESULTS, {
         title,
         actor,
         genre_id,
@@ -98,7 +97,11 @@ const SearchInput = (props) => {
         ))}
       </Select>
 
-      <Button disabled={missingParams} onClick={searchMovies} className={classes.searchButton}>
+      <Button
+        disabled={missingParams}
+        onClick={searchMovies}
+        className={classes.searchButton}
+      >
         Search
       </Button>
     </div>

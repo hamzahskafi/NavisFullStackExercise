@@ -19,7 +19,6 @@ public class Application {
     public static final String GENRE_URL = DEFAULT_URL + "/genre";
     public static final String MOVIE_URL = DEFAULT_URL + "/movie";
 
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -27,7 +26,7 @@ public class Application {
     @Autowired
     MoviesDAO moviesDAO;
     GenreDAO genresDAO;
-    
+
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {

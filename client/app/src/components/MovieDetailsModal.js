@@ -1,14 +1,9 @@
-// libs
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-
-// components
-import { withStyles, Typography } from '@material-ui/core';
-
-// modules
-
-// util
+import { withStyles, Typography } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import buildAction from "@app/util/buildAction";
 
 function getModalStyle() {
   const top = 50;
@@ -25,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
     width: 400,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.app.gray,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -33,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MovieDetailsModal = ({ selectedMovie, closeModal, isModalVisible }) => {
-//   console.log("selectedMovie2: ", selectedMovie);
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const body = (
@@ -41,25 +35,21 @@ const MovieDetailsModal = ({ selectedMovie, closeModal, isModalVisible }) => {
       <img
         src={`/images/${selectedMovie.poster}`}
         alt={`${selectedMovie.title} Poster`}
-        // style={{ width, height }}
       />
-      <Typography >
-          {selectedMovie.title}
-        </Typography>
-        <Typography>
-          {selectedMovie.year} ({selectedMovie.rating})
-        </Typography>
+      <Typography>{selectedMovie.title}</Typography>
+      <Typography>
+      {selectedMovie.studio}
+      </Typography>
+      <Typography>
+        {selectedMovie.year} ({selectedMovie.rating})
+      </Typography>
+      <Typography>{selectedMovie.plot}</Typography>
     </div>
   );
 
   return (
     <div>
-      <Modal
-        open={isModalVisible}
-        onClose={closeModal}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
+      <Modal open={isModalVisible} onClose={closeModal}>
         {body}
       </Modal>
     </div>

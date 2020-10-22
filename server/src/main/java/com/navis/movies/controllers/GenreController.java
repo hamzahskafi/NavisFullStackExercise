@@ -19,17 +19,16 @@ import java.util.List;
 
 import static com.navis.movies.Application.GENRE_URL;
 
-
 @RestController
 @RequestMapping(GENRE_URL)
 public class GenreController {
-    
+
     @Autowired
     GenreDAO genresDAO;
 
     @Operation(description = "Get Genre List")
     @GetMapping("/")
-    public List<GenreResultDTO> getGenres()  {
+    public List<GenreResultDTO> getGenres() {
         return genresDAO.getGenres();
     }
 }

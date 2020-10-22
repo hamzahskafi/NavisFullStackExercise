@@ -13,11 +13,11 @@ import java.util.List;
 
 @Repository
 public class GenreDAO {
-    
+
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
 
-    public List<GenreResultDTO> getGenres(){
+    public List<GenreResultDTO> getGenres() {
         final List<GenreResultDTO> movies = jdbcTemplate.query(
                 "SELECT id, description from genres",
                 (rs, rowNum) -> {

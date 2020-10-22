@@ -1,15 +1,15 @@
-import { applyMiddleware, compose, createStore } from 'redux';
-import { createBrowserHistory } from 'history';
+import { applyMiddleware, compose, createStore } from "redux";
+import { createBrowserHistory } from "history";
 import {
   connectRouter,
   routerMiddleware,
-} from 'connected-react-router/immutable';
-import { combineReducers } from 'redux-immer';
-import createSagaMiddleware from 'redux-saga';
-import produce from 'immer';
+} from "connected-react-router/immutable";
+import { combineReducers } from "redux-immer";
+import createSagaMiddleware from "redux-saga";
+import produce from "immer";
 
-import appReducer from '@app/modules/reducer';
-import appSagas from '@app/modules/sagas';
+import appReducer from "@app/modules/reducer";
+import appSagas from "@app/modules/sagas";
 
 export const immerHistory = createBrowserHistory();
 const sagaMiddleware = createSagaMiddleware();

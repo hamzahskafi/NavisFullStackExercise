@@ -1,9 +1,10 @@
-import { handleActions } from 'redux-actions';
-import * as Actions from './actions';
+import { handleActions } from "redux-actions";
+import * as Actions from "./actions";
 
 const initialState = {
   featuredMovies: [],
-  genreList: []
+  genreList: [],
+  movieDetails: {},
 };
 
 const reducer = handleActions(
@@ -14,6 +15,10 @@ const reducer = handleActions(
     },
     [Actions.SET_GENRE_LIST]: (state, action) => {
       state.genreList = action?.payload;
+      return state;
+    },
+    [Actions.SET_MOVIE_DETAILS]: (state, action) => {
+      state.movieDetails = action?.payload;
       return state;
     },
   },
