@@ -1,6 +1,7 @@
 // libs
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import buildAction from "@app/util/buildAction";
 
 // components
 import {
@@ -9,14 +10,15 @@ import {
   Select,
   Button,
   MenuItem,
-} from '@material-ui/core';
-import { GET_MOVIE_RESULTS } from '@app/modules/actions';
-import { selectMovies } from '@app/modules/selectors';
+} from "@material-ui/core";
+import { GET_MOVIE_RESULTS } from "@app/modules/actions";
+import { selectGenreList } from "@app/modules/selectors";
+import { GET_GENRE_LIST } from "../modules/actions";
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    display: 'flex',
-    flexFlow: 'row wrap',
+    display: "flex",
+    flexFlow: "row wrap",
   },
   input: {
     backgroundColor: theme.palette.app.white,
@@ -28,48 +30,75 @@ const styles = theme => ({
     // TODO
   },
   inputLabel: {
-    color: '#ABABAB',
+    color: "#ABABAB",
   },
 });
 
-const SearchInput = props => {
+const SearchInput = (props) => {
   const { classes } = props;
-  const [title, setTitle] = useState()
-  const [actor, setActor] = useState()
-  const [genre, setGenre] = useState()
+  const [title, setTitle] = useState();
+  const [actor, setActor] = useState();
+  const [genre_id, setGenre] = useState();
   const [genereList, setGenreList] = useState([]);
-
+  const genreListSelector = useSelector(selectGenreList);
   const dispatch = useDispatch();
-  
+
+  useEffect(() => {
+    dispatch(buildAction(GET_GENRE_LIST));
+  }, []);
+
+  useEffect(() => {
+    setGenreList(genreListSelector);
+  }, [genreListSelector]);
+
+  const missingParams = !title && !actor && !genre_id 
+
   const searchMovies = () => {
-    dispatch(buildAction(GET_MOVIE_RESULTS));
-  }
+    console.log("GET_MOVIE_RESULTS");
+    dispatch(
+      buildAction(GET_MOVIE_RESULTS, {
+        title,
+        actor,
+        genre_id,
+      })
+    );
+  };
 
   return (
     <div className={classes.root}>
       <TextField
-        placeholder='Title'
+        placeholder="Title"
         className={classes.input}
-        onChange={(e)=>{
+        onChange={(e) => {
           setTitle(e.target.value);
         }}
       />
 
       <TextField
-        placeholder='Actor'
+        placeholder="Actor"
         className={classes.input}
-        onChange={(e)=>{
+        onChange={(e) => {
           setActor(e.target.value);
         }}
       />
 
       <Select className={classes.input}>
-        <MenuItem value='Genre'>
-          <span className={classes.inputLabel}>Genre</span>
-        </MenuItem>
+        {genereList.map((genreListItem, i) => (
+          <MenuItem
+            value={genreListItem.id}
+            key={`genre-list-item-${i}`}
+            onClick={() => {
+              setGenre(genreListItem.id);
+            }}
+          >
+            <span className={classes.inputLabel}>
+              {genreListItem.description}
+            </span>
+          </MenuItem>
+        ))}
       </Select>
 
-      <Button onClick={searchMovies} className={classes.searchButton}>
+      <Button disabled={missingParams} onClick={searchMovies} className={classes.searchButton}>
         Search
       </Button>
     </div>

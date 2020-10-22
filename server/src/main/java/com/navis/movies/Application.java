@@ -3,6 +3,7 @@ package com.navis.movies;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import com.navis.movies.dao.GenreDAO;
 import com.navis.movies.dao.MoviesDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,7 +26,8 @@ public class Application {
 
     @Autowired
     MoviesDAO moviesDAO;
-
+    GenreDAO genresDAO;
+    
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {

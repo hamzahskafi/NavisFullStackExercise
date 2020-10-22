@@ -3,7 +3,7 @@ import * as Actions from './actions';
 
 const initialState = {
   featuredMovies: [],
-  searchMoviesRequestPayload: {}
+  genreList: []
 };
 
 const reducer = handleActions(
@@ -12,8 +12,8 @@ const reducer = handleActions(
       state.featuredMovies = action?.payload;
       return state;
     },
-    [Actions.SET_SEARCH_MOVIES_REQ_PAYLOAD]: (state, action) => {
-      state.searchMoviesRequestPayload = action?.payload;
+    [Actions.SET_GENRE_LIST]: (state, action) => {
+      state.genreList = action?.payload;
       return state;
     },
   },
