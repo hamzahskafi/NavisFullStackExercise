@@ -17,6 +17,7 @@ import MovieDetailsModal from "./MovieDetailsModal";
 const styles = (theme) => ({
   root: {
     // TODO
+    
   },
 });
 
@@ -24,28 +25,28 @@ const FeaturedMovies = (props) => {
   const { classes } = props;
   const dispatch = useDispatch();
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedMovie, setSelectedMovie] = useState({});
-
   useEffect(() => {
     dispatch(buildAction(FETCH_FEATURED_MOVIES));
   }, []);
 
   const movies = useSelector(selectMovies);
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState({});
+  // console.log('selectedMovie: ', selectedMovie);
+
   return (
     <div className={classes.root}>
-      {isModalVisible && (
         <MovieDetailsModal
           selectedMovie={selectedMovie}
           closeModal={() => setIsModalVisible(false)}
+          isModalVisible={isModalVisible}
         />
-      )}
       {movies.map((movie, index) => (
-        <div
+        <div key={index}
           onClick={() => {
-            setIsModalVisible(true);
             setSelectedMovie(movie);
+            setIsModalVisible(true);
           }}
         >
           <MovieCard large data={movie} key={index} />
